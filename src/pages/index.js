@@ -1,30 +1,41 @@
 import React from "react"
 import { useForm } from "react-hook-form"
+import { navigate } from "gatsby"
 
 const Home = () => {
   // Initiate forms
   const { register, handleSubmit, errors, reset } = useForm()
 
-  // const handlePost = (formData, event) => {
-  //   fetch(`/`, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //     body: encode({ "form-name": "request-changes", ...formData }),
-  //   })
-  //     .then((response) => {
-  //       navigate("/submission-received/")
-  //       reset()
-  //       console.log(response)
-  //     })
-  //     .catch((error) => {
-  //       console.log(error)
-  //     })
-  //   event.preventDefault()
-  // }
-
-  const handlePost = (formData) => {
-    console.log(formData)
+  // Transforms the form data from the React Hook Form output to a format Netlify can read
+  const encode = (data) => {
+    return Object.keys(data)
+      .map(
+        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
+      )
+      .join("&")
   }
+
+  // Handles the post process to Netlify so we can access their serverless functions
+  const handlePost = (formData, event) => {
+    fetch(`/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ "form-name": "contact-form", ...formData }),
+    })
+      .then((response) => {
+        navigate("/success/")
+        reset()
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    event.preventDefault()
+  }
+
+  // const handlePost = (formData) => {
+  //   console.log(formData)
+  // }
 
   return (
     <form
