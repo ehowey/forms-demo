@@ -10,10 +10,10 @@ exports.handler = async function (event, context, callback) {
   // Pulling out the payload from the body
   const { payload } = JSON.parse(event.body)
 
-  console.log(payload)
-
+  // Checking which form has been submitted
   const isContactForm = payload.data.formId === "contact-form"
 
+  // Build the document JSON and submit it to SANITY
   if (isContactForm) {
     const contact = {
       _type: "contact",
