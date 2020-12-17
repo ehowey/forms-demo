@@ -33,10 +33,6 @@ const Home = () => {
     event.preventDefault()
   }
 
-  // const handlePost = (formData) => {
-  //   console.log(formData)
-  // }
-
   return (
     <form
       onSubmit={handleSubmit(handlePost)}
@@ -49,7 +45,7 @@ const Home = () => {
       <input
         type="hidden"
         name="formId"
-        value="request-changes"
+        value="contact-form"
         ref={register()}
       />
       <label htmlFor="name">
